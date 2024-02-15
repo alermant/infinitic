@@ -26,5 +26,6 @@ package io.infinitic.storage.config
 enum class StorageType {
   inMemory,
   redis,
-  mysql
+  mysql,
+  mongo
 }

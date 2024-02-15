@@ -85,6 +85,17 @@ storage:
           config shouldBe StorageConfigImpl(storage = Storage(mysql = MySQL()))
         }
 
+        "can choose MongoDB storage" {
+          val config = loadConfigFromYaml<StorageConfigImpl>(
+              """
+storage:
+  mongo:
+     """,
+          )
+
+          config shouldBe StorageConfigImpl(storage = Storage(mongo = Mongo()))
+        }
+
         "can not have multiple definition in storage" {
           val e =
               shouldThrow<ConfigException> {

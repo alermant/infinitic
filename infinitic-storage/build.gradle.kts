@@ -35,6 +35,10 @@ dependencies {
   implementation("com.mysql:mysql-connector-j:8.2.0")
   testImplementation(Libs.TestContainers.mysql)
 
+  // MongoDB
+  implementation("org.mongodb:mongodb-driver-sync:4.11.0")
+  testImplementation(Libs.TestContainers.mongo)
+
   testImplementation(Libs.Hoplite.yaml)
 }
 

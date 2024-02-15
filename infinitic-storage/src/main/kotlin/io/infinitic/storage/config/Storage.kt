@@ -25,6 +25,8 @@ package io.infinitic.storage.config
 import io.infinitic.storage.compressor.Compressor
 import io.infinitic.storage.config.inMemory.InMemoryKeySetStorage
 import io.infinitic.storage.config.inMemory.InMemoryKeyValueStorage
+import io.infinitic.storage.config.mongo.MongoKeySetStorage
+import io.infinitic.storage.config.mongo.MongoKeyValueStorage
 import io.infinitic.storage.config.mysql.MySQLKeySetStorage
 import io.infinitic.storage.config.mysql.MySQLKeyValueStorage
 import io.infinitic.storage.config.redis.RedisKeySetStorage
@@ -37,10 +39,11 @@ data class Storage(
   var inMemory: InMemory? = null,
   val redis: Redis? = null,
   val mysql: MySQL? = null,
+  val mongo: Mongo? = null,
   val compression: Compressor? = null
 ) {
   init {
-    val nonNul = listOfNotNull(inMemory, redis, mysql)
+    val nonNul = listOfNotNull(inMemory, redis, mysql, mongo)
 
     if (nonNul.isEmpty()) {
       // default storage is inMemory
@@ -55,6 +58,7 @@ data class Storage(
       inMemory != null -> inMemory!!.close()
       redis != null -> redis.close()
       mysql != null -> mysql.close()
+      mongo != null -> mongo.close()
       else -> thisShouldNotHappen()
     }
   }
@@ -64,6 +68,7 @@ data class Storage(
       inMemory != null -> "inMemory"
       redis != null -> "redis"
       mysql != null -> "mysql"
+      mongo != null -> "mongo"
       else -> thisShouldNotHappen()
     }
   }
@@ -73,6 +78,7 @@ data class Storage(
       inMemory != null -> InMemoryKeySetStorage.from(inMemory!!)
       redis != null -> RedisKeySetStorage.from(redis)
       mysql != null -> MySQLKeySetStorage.from(mysql)
+      mongo != null -> MongoKeySetStorage.from(mongo)
       else -> thisShouldNotHappen()
     }
   }
@@ -82,6 +88,7 @@ data class Storage(
       inMemory != null -> InMemoryKeyValueStorage.from(inMemory!!)
       redis != null -> RedisKeyValueStorage.from(redis)
       mysql != null -> MySQLKeyValueStorage.from(mysql)
+      mongo != null -> MongoKeyValueStorage.from(mongo)
       else -> thisShouldNotHappen()
     }.let { CompressedKeyValueStorage(compression, it) }
   }
