@@ -59,8 +59,8 @@ import io.infinitic.common.workflows.engine.messages.WorkflowStateEventMessage
 import io.infinitic.common.workflows.tags.messages.WorkflowTagEngineMessage
 import io.infinitic.common.workflows.tags.messages.WorkflowTagEnvelope
 import io.infinitic.pulsar.schemas.schemaDefinition
+import org.apache.commons.text.StringEscapeUtils
 import org.apache.pulsar.client.api.Schema
-import org.apache.pulsar.shade.org.apache.commons.lang.StringEscapeUtils
 import kotlin.reflect.KClass
 
 private const val SEPARATOR = ":"
